@@ -5,6 +5,7 @@ from urllib.parse import urlparse, parse_qs
 
 import arrow
 
+from src.constants import STATES
 from src.helper_types import ParsedAuction, ParsedAuctions
 
 logger = logging.getLogger(__name__)
@@ -19,12 +20,14 @@ def parse_picture_url(url: str) -> tuple[Optional[int], Optional[str]]:
     :param url:
     :return:
     """
+    if not url:
+        return None, None
+
     params = parse_qs(urlparse(url).query)
     pid = int(params['id'][0]) if 'id' in params and params['id'] else None
     checksum = params['checksum'][0] if 'checksum' in params and params['checksum'] else None
 
     return pid, checksum
-
 
 
 def parse_responses(response_data: dict[str, Any]) -> ParsedAuctions:
@@ -49,6 +52,7 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
     :param result: The dict of a single auction
     :return: A list of the single auction with data in the following order
         auctionEndDate
+        auctionState
         bidCount
         buyNow
         companyId
@@ -65,8 +69,10 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         minBid
     """
     picture_id, picture_checksum = parse_picture_url(result.get("featuredPicture", {}).get("fullSizeLocation"))
+    auction_state = result.get("auctionState", 0)
     return [
         arrow.get(result.get("auctionEndDate", ""), "M/D/YYYY").int_timestamp,
+        STATES.get(auction_state, 0),
         result.get("lotStatus", {}).get("bidCount", None),
         result.get("lotStatus", {}).get("buyNow", None),
         result.get("companyId", None),

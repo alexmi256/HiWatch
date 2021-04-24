@@ -6,6 +6,7 @@ ParsedAuctions = list[ParsedAuction]
 
 class AuctionResult(TypedDict):
     auctionEndDate: int
+    auctionState: int
     bidCount: int
     buyNow: float
     companyId: int

@@ -11,6 +11,7 @@ cur.execute("DROP TRIGGER IF EXISTS auctions_fts_ai;")
 cur.execute(
     """CREATE TABLE auctions (
     auctionEndDate INTEGER,
+    auctionState INTEGER,
     bidCount INTEGER,
     buyNow REAL,
     companyId INTEGER,
