@@ -22,10 +22,7 @@ cur.execute(
     itemId INTEGER,
     lead TEXT,
     lotNumber TEXT,
-    minBid REAL,
-    priceRealized REAL,
-    reserveSatisfied INTEGER,
-    shippingOffered INTEGER
+    minBid REAL
 );
 """
 )

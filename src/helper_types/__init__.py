@@ -20,6 +20,3 @@ class AuctionResult(TypedDict):
     lead: str
     lotNumber: str
     minBid: float
-    priceRealized: float
-    reserveSatisfied: int
-    shippingOffered: int

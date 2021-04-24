@@ -30,7 +30,6 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
 
     :param result: The dict of a single auction
     :return: A list of the single auction with data in the following order
-
         auctionEndDate
         bidCount
         biddingExtended
@@ -46,9 +45,6 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         lead
         lotNumber
         minBid
-        priceRealized
-        reserveSatisfied
-        shippingOffered
     """
     return [
         arrow.get(result.get("auctionEndDate", ""), "M/D/YYYY").int_timestamp,
@@ -66,7 +62,4 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         result.get("lead", None),
         result.get("lotNumber", None),
         result.get("lotStatus", {}).get("minBid", None),
-        result.get("lotStatus", {}).get("priceRealized", None),
-        int(result.get("lotStatus", {}).get("reserveSatisfied", True) is True),
-        int(result.get("shippingOffered", False) is True),
     ]

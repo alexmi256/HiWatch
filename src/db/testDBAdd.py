@@ -19,7 +19,7 @@ with open("../../response.json") as json_file:
         conn = create_connection()
         c = conn.cursor()
         c.executemany(
-            """INSERT INTO auctions VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId)
+            """INSERT INTO auctions VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId)
              DO UPDATE SET
                 bidCount=excluded.bidCount,
                 biddingExtended=excluded.biddingExtended,
