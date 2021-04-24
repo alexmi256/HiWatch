@@ -5,7 +5,8 @@ from contextlib import closing
 
 import requests
 
-from src.constants import COOKIES, HEADERS, PAYLOAD, URL
+from src.constants import COOKIES, HEADERS, PAYLOAD, URLS, GLOBAL
+from src.db.dbHelpers import AUCTION_INSERT_QUERY
 from src.helper_types import ParsedAuctions
 from src.response_parser import parse_responses
 
@@ -14,7 +15,8 @@ logger = logging.getLogger(__name__)
 
 
 class AuctionParser:
-    def __init__(self):
+    def __init__(self, site):
+        self.site = site
         while True:
             sleep_time = max(50, self.parse_pages() - 30)
             logger.info(f"Sleeping for {sleep_time} seconds until performing next check")
@@ -33,22 +35,12 @@ class AuctionParser:
             with closing(sqlite3.connect("db/auctions.db")) as conn:
                 with conn:
                     with closing(conn.cursor()) as cursor:
-                        cursor.executemany(
-                            """INSERT INTO auctions VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId)
-                             DO UPDATE SET
-                                bidCount=excluded.bidCount,
-                                highBid=excluded.highBid,
-                                highBuyerId=excluded.highBuyerId,
-                                minBid=excluded.minBid;
-                        """,
-                            auctions,
-                        )
+                        cursor.executemany(AUCTION_INSERT_QUERY, auctions)
         except Exception as e:
             logger.error("Failed to save data")
             logger.error(e)
 
-    @staticmethod
-    def parse_page(number: object) -> tuple[ParsedAuctions, bool, int]:
+    def parse_page(self, number: object) -> tuple[ParsedAuctions, bool, int]:
         """
         Parses the results of an auction page
 
@@ -59,7 +51,7 @@ class AuctionParser:
         logger.info(f"Parsing page #{number}")
         new_payload = PAYLOAD.copy()
         new_payload["pn"] = number
-        response = requests.get(URL, params=new_payload, headers=HEADERS, cookies=COOKIES, allow_redirects=False)
+        response = requests.get(URLS[self.site], params=new_payload, headers=HEADERS, cookies=COOKIES, allow_redirects=False)
         response.raise_for_status()
         response_data = response.json()
 
@@ -110,4 +102,4 @@ class AuctionParser:
 
 
 if __name__ == "__main__":
-    AuctionParser()
+    AuctionParser(GLOBAL)

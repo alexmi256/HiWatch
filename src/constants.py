@@ -1,11 +1,10 @@
-URL = "https://ontario.hibid.com/api/v1/lot/list"
 URLS = {
     'ontario': "https://ontario.hibid.com/api/v1/lot/list",
-    'global': ''
+    'global': "https://hibid.com/api/v1/lot/list"
 }
-PAYLOAD = {"pn": None, "ipp": 100, "isArchive": "false", "filter": "biddable", "status": "open"}
+PAYLOAD = {"pn": None, "ipp": 100, "isArchive": "false", "filter": "biddable", "status": "closing"}
 HEADERS = {
-    "authority": "ontario.hibid.com",
+    "authority": "hibid.com",
     "sec-ch-ua": '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
     "x-requested-with": "XMLHttpRequest",
     "sec-ch-ua-mobile": "?0",
@@ -14,7 +13,7 @@ HEADERS = {
     "sec-fetch-site": "same-origin",
     "sec-fetch-mode": "cors",
     "sec-fetch-dest": "empty",
-    "referer": "https://ontario.hibid.com/lots/?filter=biddable",
+    "referer": "https://hibid.com/lots/?filter=biddable&status=closing",
     "accept-language": "en-US,en;q=0.9,fr;q=0.8,ro;q=0.7",
 }
 COOKIES = {"UseInfiniteScroll": "true", "emailcta": "pagehits=3&userdismissed=true"}
@@ -89,3 +88,6 @@ STATES = {
     "SK": 68,
     "YT": 69
 }
+# Site options
+GLOBAL = 'global'
+ONTARIO = 'ontario'

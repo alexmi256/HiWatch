@@ -2,7 +2,7 @@ import json
 import logging
 from pprint import pformat
 
-from src.db.dbHelpers import create_connection
+from src.db.dbHelpers import create_connection, AUCTION_INSERT_QUERY
 from src.response_parser import parse_responses
 
 logging.basicConfig(level=logging.INFO)
@@ -18,16 +18,7 @@ with open("../../response.json") as json_file:
     try:
         conn = create_connection()
         c = conn.cursor()
-        c.executemany(
-            """INSERT INTO auctions VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId)
-             DO UPDATE SET
-                bidCount=excluded.bidCount,
-                highBid=excluded.highBid,
-                highBuyerId=excluded.highBuyerId,
-                minBid=excluded.minBid
-        """,
-            data,
-        )
+        c.executemany(AUCTION_INSERT_QUERY, data)
         conn.commit()
         conn.close()
     except Exception as ex:

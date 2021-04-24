@@ -18,7 +18,8 @@ Python 3.9
 SQLite with fts5
 
 # TODO
-- [ ] Experiment with filter to be `online` instead of `biddable`
+- [x] Experiment with filter to be `online` instead of `biddable`
+    - Didn't work, will try using `status=closing` 
 - [ ] Check to make sure I'm not overwriting with empty prices
 - ~~[ ] Store currencies (CAD/USD) in a different table~~
   - Won't do, just guess currency based on the states
@@ -30,5 +31,5 @@ SQLite with fts5
   - [x] Test `WITHOUT ROWID` for main table since I'm using something else
   - ~~[ ] Merge the `lead` and `desciption` into one field~~ 
     - This is a bad idea, returning results will be a pain
-- [ ] Test out on main HiBid site
+- [x] Test out on main HiBid site
 - [ ] Make website for viewing ended auctions
