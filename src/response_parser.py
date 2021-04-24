@@ -1,12 +1,30 @@
 import logging
 from pprint import pformat
-from typing import Any
+from typing import Any, Optional
+from urllib.parse import urlparse, parse_qs
 
 import arrow
 
 from src.helper_types import ParsedAuction, ParsedAuctions
 
 logger = logging.getLogger(__name__)
+
+
+def parse_picture_url(url: str) -> tuple[Optional[int], Optional[str]]:
+    """
+    Parses out the picture id and checksum from the given url
+    Example:
+        https://media.sandhills.com/img.axd?id=12345&wid=&p=&ext=&w=0&h=0&t=&lp=&c=True&wt=False&sz=Max&rt=0&checksum=QWERTYUIOP
+        will return [12345, QWERTYUIOP]
+    :param url:
+    :return:
+    """
+    params = parse_qs(urlparse(url).query)
+    pid = int(params['id'][0]) if 'id' in params and params['id'] else None
+    checksum = params['checksum'][0] if 'checksum' in params and params['checksum'] else None
+
+    return pid, checksum
+
 
 
 def parse_responses(response_data: dict[str, Any]) -> ParsedAuctions:
@@ -38,7 +56,8 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         description
         eventId
         eventItemId
-        fullSizeLocationPicture
+        pictureId
+        pictureChecksum
         highBid
         highBuyerId
         itemId
@@ -46,6 +65,7 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         lotNumber
         minBid
     """
+    picture_id, picture_checksum = parse_picture_url(result.get("featuredPicture", {}).get("fullSizeLocation"))
     return [
         arrow.get(result.get("auctionEndDate", ""), "M/D/YYYY").int_timestamp,
         result.get("lotStatus", {}).get("bidCount", None),
@@ -55,7 +75,8 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         result.get("description", None),
         result.get("eventId", None),
         result.get("eventItemId", None),
-        result.get("featuredPicture").get("fullSizeLocation"),
+        picture_id,
+        picture_checksum,
         result.get("lotStatus", {}).get("highBid", None),
         int(result.get("lotStatus", {}).get("highBuyerId", None)),
         result.get("itemId", None),

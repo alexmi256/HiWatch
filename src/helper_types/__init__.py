@@ -13,7 +13,8 @@ class AuctionResult(TypedDict):
     description: str
     eventId: int
     eventItemId: int
-    fullSizeLocationPicture: str
+    pictureId: int
+    pictureChecksum: str
     highBid: float
     highBuyerId: int
     itemId: int

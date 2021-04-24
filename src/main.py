@@ -34,7 +34,7 @@ class AuctionParser:
                 with conn:
                     with closing(conn.cursor()) as cursor:
                         cursor.executemany(
-                            """INSERT INTO auctions VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId)
+                            """INSERT INTO auctions VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId)
                              DO UPDATE SET
                                 bidCount=excluded.bidCount,
                                 biddingExtended=excluded.biddingExtended,

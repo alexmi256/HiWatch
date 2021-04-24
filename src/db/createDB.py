@@ -5,6 +5,7 @@ conn = create_connection()
 cur = conn.cursor()
 cur.execute("DROP TABLE IF EXISTS auctions;")
 cur.execute("DROP TABLE IF EXISTS auctions_fts;")
+cur.execute("DROP TABLE IF EXISTS states;")
 cur.execute("DROP TRIGGER IF EXISTS auctions_fts_ai;")
 cur.execute(
     """CREATE TABLE auctions (
@@ -16,7 +17,8 @@ cur.execute(
     description TEXT,
     eventId INTEGER,
     eventItemId INTEGER NOT NULL PRIMARY KEY,
-    fullSizeLocationPicture TEXT,
+    pictureId INTEGER,
+    pictureChecksum TEXT,
     highBid REAL,
     highBuyerId INTEGER,
     itemId INTEGER,
@@ -43,6 +45,13 @@ cur.execute(
     """CREATE TRIGGER auctions_fts_ai AFTER INSERT ON auctions BEGIN
   INSERT INTO auctions_fts(rowid, lead, description) VALUES (new.eventItemId, new.lead, new.description);
 END;"""
+)
+cur.execute(
+    """CREATE TABLE states (
+    id INTEGER NOT NULL PRIMARY KEY,
+    twoLetterCode TEXT,
+);
+"""
 )
 conn.commit()
 conn.close()
