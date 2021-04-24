@@ -50,7 +50,6 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
     :return: A list of the single auction with data in the following order
         auctionEndDate
         bidCount
-        biddingExtended
         buyNow
         companyId
         description
@@ -69,7 +68,6 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
     return [
         arrow.get(result.get("auctionEndDate", ""), "M/D/YYYY").int_timestamp,
         result.get("lotStatus", {}).get("bidCount", None),
-        int(result.get("lotStatus", {}).get("biddingExtended", False) is True),
         result.get("lotStatus", {}).get("buyNow", None),
         result.get("companyId", None),
         result.get("description", None),

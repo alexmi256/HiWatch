@@ -1,4 +1,5 @@
 from src.db.dbHelpers import create_connection
+from src.constants import STATES
 
 conn = create_connection()
 
@@ -11,7 +12,6 @@ cur.execute(
     """CREATE TABLE auctions (
     auctionEndDate INTEGER,
     bidCount INTEGER,
-    biddingExtended INTEGER,
     buyNow REAL,
     companyId INTEGER,
     description TEXT,
@@ -25,7 +25,7 @@ cur.execute(
     lead TEXT,
     lotNumber TEXT,
     minBid REAL
-);
+)   WITHOUT ROWID;
 """
 )
 # AFAICT While I can create an fts table based on another table, I will still need to updated the fts table itself
@@ -49,9 +49,10 @@ END;"""
 cur.execute(
     """CREATE TABLE states (
     id INTEGER NOT NULL PRIMARY KEY,
-    twoLetterCode TEXT,
-);
+    twoLetterCode TEXT
+)   WITHOUT ROWID;
 """
 )
+cur.executemany('INSERT INTO auctions VALUES(?,?)', [[v, k] for k, v in STATES.items()])
 conn.commit()
 conn.close()

@@ -25,8 +25,8 @@ SQLite with fts5
   - [x] Remove `auctionBeginDate` and make `auctionEndDate` an `int` based on UNIX time
   - [x] Remove `priceRealized`, `shippingOffered`, `reserveSatisfied`
   - [x] Save only `media id` and `checksum` for the image
-  - [ ] Create table for auction states
-  - [ ] Test `WITHOUT ROWID` for main table since I'm using something else
+  - [x] Create table for auction states
+  - [x] Test `WITHOUT ROWID` for main table since I'm using something else
   - [ ] Merge the `lead` and `desciption` into one field
 - [ ] Test out on main HiBid site
 - [ ] Make website for viewing ended auctions
