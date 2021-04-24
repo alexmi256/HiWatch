@@ -22,7 +22,7 @@ SQLite with fts5
 - [ ] Check to make sure I'm not overwriting with empty prices
 - [ ] Store currencies (CAD/USD) in a different table
 - [ ] Change table structure
-  - [ ] Remove `auctionBeginDate` and make `auctionEndDate` an `int` based on UNIX time
+  - [x] Remove `auctionBeginDate` and make `auctionEndDate` an `int` based on UNIX time
   - [ ] Remove `priceRealized`, `shippingOffered`, `reserveSatisfied`
   - [ ] Save only `media id` and `checksum` for the image
   - [ ] Create table for auction states

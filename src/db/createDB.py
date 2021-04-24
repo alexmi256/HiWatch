@@ -8,8 +8,7 @@ cur.execute("DROP TABLE IF EXISTS auctions_fts;")
 cur.execute("DROP TRIGGER IF EXISTS auctions_fts_ai;")
 cur.execute(
     """CREATE TABLE auctions (
-    auctionBeginDate TEXT,
-    auctionEndDate TEXT,
+    auctionEndDate INTEGER,
     bidCount INTEGER,
     biddingExtended INTEGER,
     buyNow REAL,
