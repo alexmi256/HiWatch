@@ -54,7 +54,6 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         auctionEndDate
         auctionState
         bidCount
-        buyNow
         companyId
         description
         eventId
@@ -74,7 +73,6 @@ def parse_auction_result_list(result: dict[str, Any]) -> ParsedAuction:
         arrow.get(result.get("auctionEndDate", ""), "M/D/YYYY").int_timestamp,
         STATES.get(auction_state, 0),
         result.get("lotStatus", {}).get("bidCount", None),
-        result.get("lotStatus", {}).get("buyNow", None),
         result.get("companyId", None),
         result.get("description", None),
         result.get("eventId", None),

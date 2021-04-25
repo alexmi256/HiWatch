@@ -13,7 +13,6 @@ cur.execute(
     auctionEndDate INTEGER,
     auctionState INTEGER,
     bidCount INTEGER,
-    buyNow REAL,
     companyId INTEGER,
     description TEXT,
     eventId INTEGER,

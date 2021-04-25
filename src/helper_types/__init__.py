@@ -8,7 +8,6 @@ class AuctionResult(TypedDict):
     auctionEndDate: int
     auctionState: int
     bidCount: int
-    buyNow: float
     companyId: int
     description: str
     eventId: int

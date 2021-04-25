@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.9
 import logging
 import sqlite3
 import time

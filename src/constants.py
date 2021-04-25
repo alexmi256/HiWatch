@@ -2,7 +2,7 @@ URLS = {
     'ontario': "https://ontario.hibid.com/api/v1/lot/list",
     'global': "https://hibid.com/api/v1/lot/list"
 }
-PAYLOAD = {"pn": None, "ipp": 100, "isArchive": "false", "filter": "biddable", "status": "closing"}
+PAYLOAD = {"pn": None, "ipp": 100, "isArchive": "false", "filter": "online", "status": "closing"}
 HEADERS = {
     "authority": "hibid.com",
     "sec-ch-ua": '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
@@ -13,7 +13,7 @@ HEADERS = {
     "sec-fetch-site": "same-origin",
     "sec-fetch-mode": "cors",
     "sec-fetch-dest": "empty",
-    "referer": "https://hibid.com/lots/?filter=biddable&status=closing",
+    "referer": "https://hibid.com/lots/?filter=online&status=closing",
     "accept-language": "en-US,en;q=0.9,fr;q=0.8,ro;q=0.7",
 }
 COOKIES = {"UseInfiniteScroll": "true", "emailcta": "pagehits=3&userdismissed=true"}

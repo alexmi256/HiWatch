@@ -18,18 +18,6 @@ Python 3.9
 SQLite with fts5
 
 # TODO
-- [x] Experiment with filter to be `online` instead of `biddable`
-    - Didn't work, will try using `status=closing` 
 - [ ] Check to make sure I'm not overwriting with empty prices
-- ~~[ ] Store currencies (CAD/USD) in a different table~~
-  - Won't do, just guess currency based on the states
-- [x] Change table structure
-  - [x] Remove `auctionBeginDate` and make `auctionEndDate` an `int` based on UNIX time
-  - [x] Remove `priceRealized`, `shippingOffered`, `reserveSatisfied`
-  - [x] Save only `media id` and `checksum` for the image
-  - [x] Create table for auction states
-  - [x] Test `WITHOUT ROWID` for main table since I'm using something else
-  - ~~[ ] Merge the `lead` and `desciption` into one field~~ 
-    - This is a bad idea, returning results will be a pain
-- [x] Test out on main HiBid site
+- [ ] Improve scraping interval based on auction end times
 - [ ] Make website for viewing ended auctions

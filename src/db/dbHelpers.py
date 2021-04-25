@@ -18,7 +18,7 @@ def create_connection(db_file="auctions.db"):
 
 AUCTION_INSERT_QUERY = """
 INSERT INTO auctions
-VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId) DO
+VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(eventItemId) DO
 UPDATE
 SET bidCount=excluded.bidCount,
     highBid=excluded.highBid,
