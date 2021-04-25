@@ -8,10 +8,18 @@ If not, then we will stop processing pages since we don't care about items that 
 
 Usually when someone bids on an item it will extend the auction end time by 2min.
 
-Thus, we only need to check auction prices periodically. Currently we recheck the first page based on the max(50 seconds, first auction end time - 30 seconds).
+Thus, we only need to check auction prices periodically. Currently, we recheck the first page based on the max(50 seconds, first auction end time - 30 seconds).
 
 This should allow to capture the final price while not going overboard with making requests.
 
+# Installation
+```sh
+virtualenv venv
+source venv/bin/activate
+
+pip install requests arrow
+sqlite3 src/db/auctions.db < src/db/createDB.sql
+```
 
 # Requirements
 Python 3.9
