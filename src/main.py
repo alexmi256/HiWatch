@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.9
+import argparse
 import logging
 import sqlite3
 import time
@@ -11,20 +12,20 @@ from src.db.dbHelpers import AUCTION_INSERT_QUERY
 from src.helper_types import ParsedAuctions
 from src.response_parser import parse_responses
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
 
 
 class AuctionParser:
-    def __init__(self, site):
+    def __init__(self, site, db_location):
         self.site = site
+        self.db_location = db_location
         while True:
             sleep_time = max(50, self.parse_pages() - 30)
             logger.info(f"Sleeping for {sleep_time} seconds until performing next check")
             time.sleep(sleep_time)
 
-    @staticmethod
-    def save_auctions(auctions: ParsedAuctions):
+    def save_auctions(self, auctions: ParsedAuctions):
         """
         Saves the auctions to the database
 
@@ -33,7 +34,7 @@ class AuctionParser:
         """
         try:
             logger.info(f"Saving {len(auctions)} auction items")
-            with closing(sqlite3.connect("db/auctions.db")) as conn:
+            with closing(sqlite3.connect(self.db_location)) as conn:
                 with conn:
                     with closing(conn.cursor()) as cursor:
                         cursor.executemany(AUCTION_INSERT_QUERY, auctions)
@@ -103,4 +104,16 @@ class AuctionParser:
 
 
 if __name__ == "__main__":
-    AuctionParser(GLOBAL)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("site", type=str, choices=[GLOBAL, 'ontario'], default=GLOBAL, help="Site to parse results from")
+    parser.add_argument("db", default='src/db/auctions.db', type=str, help="Path to the SQLite database")
+    parser.add_argument("-v", "--verbosity", action="count", default=0, help="Increase output verbosity")
+    args = parser.parse_args()
+    if args.verbosity == 1:
+        logger.setLevel(logging.INFO)
+    elif args.verbosity == 2:
+        logger.setLevel(logging.DEBUG)
+    elif args.verbosity > 2:
+        logger.setLevel(logging.NOTSET)
+
+    AuctionParser(args['site'], args['db'])
