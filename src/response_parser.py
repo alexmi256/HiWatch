@@ -1,7 +1,7 @@
 import logging
 from pprint import pformat
 from typing import Any, Optional
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 import arrow
 
@@ -24,8 +24,8 @@ def parse_picture_url(url: str) -> tuple[Optional[int], Optional[str]]:
         return None, None
 
     params = parse_qs(urlparse(url).query)
-    pid = int(params['id'][0]) if 'id' in params and params['id'] else None
-    checksum = params['checksum'][0] if 'checksum' in params and params['checksum'] else None
+    pid = int(params["id"][0]) if "id" in params and params["id"] else None
+    checksum = params["checksum"][0] if "checksum" in params and params["checksum"] else None
 
     return pid, checksum
 

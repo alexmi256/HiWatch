@@ -1,5 +1,5 @@
-from src.db.dbHelpers import create_connection
 from src.constants import STATES
+from src.db.dbHelpers import create_connection
 
 conn = create_connection()
 
@@ -53,6 +53,6 @@ cur.execute(
 )   WITHOUT ROWID;
 """
 )
-cur.executemany('INSERT INTO states VALUES(?,?);', [[v, k] for k, v in STATES.items()])
+cur.executemany("INSERT INTO states VALUES(?,?);", [[v, k] for k, v in STATES.items()])
 conn.commit()
 conn.close()

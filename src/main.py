@@ -7,7 +7,7 @@ from contextlib import closing
 
 import requests
 
-from src.constants import COOKIES, HEADERS, PAYLOAD, URLS, GLOBAL
+from src.constants import COOKIES, GLOBAL, HEADERS, PAYLOAD, URLS
 from src.db.dbHelpers import AUCTION_INSERT_QUERY
 from src.helper_types import ParsedAuctions
 from src.response_parser import parse_responses
@@ -53,7 +53,9 @@ class AuctionParser:
         logger.info(f"Parsing page #{number}")
         new_payload = PAYLOAD.copy()
         new_payload["pn"] = number
-        response = requests.get(URLS[self.site], params=new_payload, headers=HEADERS, cookies=COOKIES, allow_redirects=False)
+        response = requests.get(
+            URLS[self.site], params=new_payload, headers=HEADERS, cookies=COOKIES, allow_redirects=False
+        )
         response.raise_for_status()
         response_data = response.json()
 
@@ -105,8 +107,10 @@ class AuctionParser:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("site", type=str, choices=[GLOBAL, 'ontario'], default=GLOBAL, help="Site to parse results from")
-    parser.add_argument("db", default='src/db/auctions.db', type=str, help="Path to the SQLite database")
+    parser.add_argument(
+        "site", type=str, choices=[GLOBAL, "ontario"], default=GLOBAL, help="Site to parse results from"
+    )
+    parser.add_argument("db", default="src/db/auctions.db", type=str, help="Path to the SQLite database")
     parser.add_argument("-v", "--verbosity", action="count", default=0, help="Increase output verbosity")
     args = parser.parse_args()
     if args.verbosity == 1:
@@ -116,4 +120,4 @@ if __name__ == "__main__":
     elif args.verbosity > 2:
         logger.setLevel(logging.NOTSET)
 
-    AuctionParser(args['site'], args['db'])
+    AuctionParser(args.site, args.db)

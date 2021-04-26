@@ -1,7 +1,4 @@
-URLS = {
-    'ontario': "https://ontario.hibid.com/api/v1/lot/list",
-    'global': "https://hibid.com/api/v1/lot/list"
-}
+URLS = {"ontario": "https://ontario.hibid.com/api/v1/lot/list", "global": "https://hibid.com/api/v1/lot/list"}
 PAYLOAD = {"pn": None, "ipp": 100, "isArchive": "false", "filter": "online", "status": "closing"}
 HEADERS = {
     "authority": "hibid.com",
@@ -86,8 +83,8 @@ STATES = {
     "PE": 66,
     "QC": 67,
     "SK": 68,
-    "YT": 69
+    "YT": 69,
 }
 # Site options
-GLOBAL = 'global'
-ONTARIO = 'ontario'
+GLOBAL = "global"
+ONTARIO = "ontario"

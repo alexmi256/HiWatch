@@ -19,6 +19,7 @@ source venv/bin/activate
 
 pip install requests arrow
 sqlite3 src/db/auctions.db < src/db/createDB.sql
+python src/main.py global src/db/auctions.db
 ```
 
 # Requirements

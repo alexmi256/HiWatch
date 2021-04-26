@@ -2,7 +2,7 @@ import json
 import logging
 from pprint import pformat
 
-from src.db.dbHelpers import create_connection, AUCTION_INSERT_QUERY
+from src.db.dbHelpers import AUCTION_INSERT_QUERY, create_connection
 from src.response_parser import parse_responses
 
 logging.basicConfig(level=logging.INFO)
