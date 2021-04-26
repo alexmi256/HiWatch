@@ -12,7 +12,7 @@ from src.db.dbHelpers import AUCTION_INSERT_QUERY
 from src.helper_types import ParsedAuctions
 from src.response_parser import parse_responses
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -113,11 +113,11 @@ if __name__ == "__main__":
     parser.add_argument("db", default="src/db/auctions.db", type=str, help="Path to the SQLite database")
     parser.add_argument("-v", "--verbosity", action="count", default=0, help="Increase output verbosity")
     args = parser.parse_args()
-    if args.verbosity == 1:
-        logger.setLevel(logging.INFO)
-    elif args.verbosity == 2:
-        logger.setLevel(logging.DEBUG)
-    elif args.verbosity > 2:
-        logger.setLevel(logging.NOTSET)
+    # if args.verbosity == 1:
+    #     logger.setLevel(logging.INFO)
+    # elif args.verbosity == 2:
+    #     logger.setLevel(logging.DEBUG)
+    # elif args.verbosity > 2:
+    #     logger.setLevel(logging.NOTSET)
 
     AuctionParser(args.site, args.db)
